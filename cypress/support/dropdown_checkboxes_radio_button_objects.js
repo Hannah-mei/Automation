@@ -5,30 +5,13 @@ export class DropdownsCheckboxesRadioButtons {
         let values3 = ["html", "css", "javascript", "jquery"]
         let values4 = ['apple', 'orange', 'pear', 'grape']
         let values = [values1, values2, values3, values4]
-        for (let i=0; i<values.length; i++) {
-            cy.get('.dropdown-menu-lists').each((dropdown, i) => {
-                for (let j=0; j<values[i].length; j++) {
-                    cy.wrap(dropdown).find('option').each((option, j) => {
-                        if (!option.attr('disabled')) {
-                            cy.wrap(dropdown).select(j).invoke('prop', 'value').should('equal', values[i][j])
-                        } else {
-                            cy.wrap(option).invoke('attr', 'value')
-                        }
-                    })
-                        
-                    // cy.wrap(dropdown).find('option').each(option => {
-                    //     if (disabledAttr != disabledValue) {
-                    //     }
-                    // })
+        cy.get('.dropdown-menu-lists').each((dropdown, i) => {
+            cy.wrap(dropdown).find('option').each((option, j) => {
+                if (!option.attr('disabled')) {
+                    cy.wrap(dropdown).select(j).should('have.value', values[i][j])
                 }
             })
-        }
-        // for (let i=0; i<4; i++) {
-        //     if ()
-        //     cy.get('#dropdowm-menu-1').select(i).invoke('prop', 'value').should('equal', values1[i])
-        //     cy.get('#dropdowm-menu-2').select(i).invoke('prop', 'value').should('equal', values2[i])
-        //     cy.get('#dropdowm-menu-3').select(i).invoke('prop', 'value').should('equal', values3[i])
-        // }
+        })
     }
 
     checkboxes() {

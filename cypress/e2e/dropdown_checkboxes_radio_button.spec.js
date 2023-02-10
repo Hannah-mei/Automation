@@ -7,13 +7,6 @@ describe ('Dropdown Menu(s), Checkboxe(s) & Radio Button(s)', () => {
 
     it('check values in dropdown lists', () => {
         onDropdownsPage.dropdownValues()
-        // cy.get('#fruit-selects').then(dropdown => {
-        //     cy.wrap(dropdown).find('option').each(option => {
-        //         if(option.attr('disabled')) {
-        //             alert(false)
-        //         }
-        //     })
-        // })
     })
 
     it('check checkboxes', () => {
