@@ -5,7 +5,7 @@ describe ('datepicker', () => {
         cy.visit('https://webdriveruniversity.com/Datepicker/index.html')
     })
 
-    it('pick and check the date', () => {
-        onDatepickerPage.pickADate()
+    it('enter the date in the format DD, MM, YYYY', () => {
+        onDatepickerPage.pickADate(28, 2, 2043)
     })
 })
