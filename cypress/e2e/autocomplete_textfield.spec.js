@@ -6,6 +6,6 @@ describe ('autocomplete', () => {
     })
 
     it('type 3 characters and select the second element from the list', () => {
-        onAutocompletePage.typeAndSelect('aut')
+        onAutocompletePage.typeAndSelect('chi')
     })
 })
