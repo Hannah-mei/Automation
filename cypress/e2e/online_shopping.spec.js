@@ -7,8 +7,12 @@ describe ('online shopping', () => {
         makeAnOrder.checkOut()
     })
 
-    it.only ('validate the text fields', () => {
+    it ('validate the text fields', () => {
         makeAnOrder.addMakeUp()
         makeAnOrder.validation()
+    })
+
+    it.only('add a review', () => {
+        makeAnOrder.addReview()
     })
 })

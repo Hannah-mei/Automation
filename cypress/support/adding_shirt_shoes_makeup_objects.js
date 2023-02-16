@@ -52,32 +52,57 @@ export class MakingOrder {
     validation() {
         getToGuestForm()
         let fieldsAndValues = {
-            '#guestFrm_firstname' : ['s', 'sn', 'sno', 'ulnVvbLf8TJJw5LtDVjA96wxsmoNHyVC'],
-            '#guestFrm_lastname' : ['s', 'sn', 'sno', 'ulnVvbLf8TJJw5LtDVjA96wxsmoNHyVC'],
+            '#guestFrm_firstname' : ['s', 'sn', 'ulnVvbLf8TJJw5LtDVjA96wxsmoNHyVCy'],
+            '#guestFrm_lastname' : ['s', 'sn', 'ulnVvbLf8TJJw5LtDVjA96wxsmoNHyVCy'],
             '#guestFrm_email': ['john.com', 'john@snow', 'john', 'john@snow.'],
-            '#guestFrm_address_1' : ['s', 'sn', 'sno', 'eOq3WvsnzfeHCjHNPhQwusyqDzqIyXm4t1vGrp9l7R6K9BcwvVgJjQG4Ujgk6ge4WwuWNrtCgMx01jflHC3n181TiM6O8ZIc8yULYyJIzRkZANtJvmG6tNG11msZrkU5'],
-            '#guestFrm_city' : ['s', 'sn', 'sno', 'eOq3WvsnzfeHCjHNPhQwusyqDzqIyXm4t1vGrp9l7R6K9BcwvVgJjQG4Ujgk6ge4WwuWNrtCgMx01jflHC3n181TiM6O8ZIc8yULYyJIzRkZANtJvmG6tNG11msZrkU5'],
-            '#guestFrm_postcode': ['s', 'sn', 'sno', '7RFxPAKrVA']
+            '#guestFrm_address_1' : ['s', 'sn', 'beOq3WvsnzfeHCjHNPhQwusyqDzqIyXm4t1vGrp9l7R6K9BcwvVgJjQG4Ujgk6ge4WwuWNrtCgMx01jflHC3n181TiM6O8ZIc8yULYyJIzRkZANtJvmG6tNG11msZrkU5'],
+            '#guestFrm_city' : ['s', 'sn', 'beOq3WvsnzfeHCjHNPhQwusyqDzqIyXm4t1vGrp9l7R6K9BcwvVgJjQG4Ujgk6ge4WwuWNrtCgMx01jflHC3n181TiM6O8ZIc8yULYyJIzRkZANtJvmG6tNG11msZrkU5'],
+            '#guestFrm_postcode': ['s', 'sn', '7RFxPAKrVAm']
         }
-        let errorMessages = {
-            firstName: 'First Name must be greater than 3 and less than 32 characters!',
-            lastName: 'Last Name must be greater than 3 and less than 32 characters!',
-            email: 'E-Mail Address does not appear to be valid!',
-            address1: 'Address 1 must be greater than 3 and less than 128 characters!',
-            city: 'City must be greater than 3 and less than 128 characters!',
-            ZIP: 'Zip/postal code must be between 3 and 10 characters!'
+        let errors = {
+            'First Name:': 'First Name must be greater than 3 and less than 32 characters!',
+            'Last Name:': 'Last Name must be greater than 3 and less than 32 characters!',
+            'E-Mail:': 'E-Mail Address does not appear to be valid!',
+            'Address 1:': 'Address 1 must be greater than 3 and less than 128 characters!',
+            'City:': 'City must be greater than 3 and less than 128 characters!',
+            'ZIP/Post Code:': 'Zip/postal code must be between 3 and 10 characters!'
 
         }
         let textFields = Object.keys(fieldsAndValues)
         let wrongValues = Object.values(fieldsAndValues)
+        let errorMessages = Object.values(errors)
+        let textFieldsNames = Object.keys(errors)
         for (let i=0; i<textFields.length; i++) {
             for (let j=0; j<wrongValues[i].length; j++) {
                 cy.get(textFields[i]).type(wrongValues[i][j])
                 cy.get('#guestFrm').submit()
-                
+                cy.contains(textFieldsNames[i]).parent().find('span').should('contain', errorMessages[i])
                 cy.get(textFields[i]).clear()
             }
         }
+        cy.contains('Region / State:').parent().find('span').should('contain', 'Please select a region / state!')
+        cy.get('#guestFrm_country_id').select(0)
+        cy.get('#guestFrm').submit()
+        cy.contains('Country:').parent().find('span').should('contain', 'Please select a country!')
+    }
+
+    addReview() {
+        cy.visit('https://automationteststore.com/')
+        cy.get('[src="//automationteststore.com/image/thumbnails/18/6b/demo_product02_3_jpg-100029-250x250.jpg"]')
+            .parent()
+            .parent()
+            .trigger('mouseover')
+            .contains('Write Review')
+            .click()
+        cy.get('#rating5').click()
+        cy.get('#name').type('John')
+        cy.get('#text').type('mG4*H9j@1Nzxo7v2QfS%p$6Kl')
+        cy.get('#text').then(() => {
+            let captcha = prompt('Enter the number from the image')
+            cy.get('#captcha').type(captcha)
+        })
+        cy.get('#review_submit').click()
+        cy.get('[class="alert alert-success"]').should('contain', 'Thank you for your review. It has been submitted to the webmaster for approval.')
     }
 
 }
