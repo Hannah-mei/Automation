@@ -1,10 +1,14 @@
+let placeholderFirstName = '[placeholder="First Name"]';
+let placeholderLastName = '[placeholder = "Last Name"]';
+let placeholderEmail = '[placeholder="Email Address"]';
+let placeholderComments = '[placeholder="Comments"]'
 
 export class ContactUs {
     completeTheForm (firstName, lastName, email, comments) {
-        cy.get('[placeholder="First Name"]').type(firstName)
-        cy.get('[placeholder="Last Name"]').type(lastName)
-        cy.get('[placeholder="Email Address"]').type(email)
-        cy.get('[placeholder="Comments"]').type(comments)
+        cy.get(placeholderFirstName).type(firstName)
+        cy.get(placeholderLastName).type(lastName)
+        cy.get(placeholderEmail).type(email)
+        cy.get(placeholderComments).type(comments)
     }
 
     emptyTextBoxes () {
@@ -32,10 +36,10 @@ export class ContactUs {
 
     }
 
-    wrongEmailError (wrongEmail) {
+    wrongEmailError () {
         let wrongEmails = ['john.snow', 'john@snow', 'john@snow.', '@snow']
         for (let wrongEmail of wrongEmails) {
-            cy.get('[placeholder="Email Address"]').type(wrongEmail)
+            cy.get(placeholderEmail).type(wrongEmail)
             cy.get('form').submit()
             cy.get('body').should('contain', 'Error: Invalid email address')
             cy.visit("https://webdriveruniversity.com/Contact-Us/contactus.html")

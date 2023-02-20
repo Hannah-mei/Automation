@@ -8,12 +8,11 @@ export class MakingOrder {
     addTshirtShoes () {
         cy.visit('https://automationteststore.com/')
         let items = ['T-shirts', 'Shoes']
-        let itemIds = ['[data-id="123"]', '[data-id="118"]']
         let prices = []
         items.forEach((item, i) => {
             cy.contains('Apparel & accessories').click({force: true})
             cy.contains(item).click({force: true})
-            cy.get(itemIds[i]).first().click()
+            cy.get('[title="Add to Cart"]').eq(1).click()
             cy.get('.productfilneprice').invoke('text').then(priceStr => {
                 let priceNum = priceStr.replace(/[^0-9.-]+/g, "")
                 parseFloat(priceNum)
